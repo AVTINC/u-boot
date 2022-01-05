@@ -269,6 +269,25 @@ static void setup_iomux_uart(void)
 	imx_iomux_v3_setup_multiple_pads(uart4_pads, ARRAY_SIZE(uart4_pads));
 }
 
+static void setup_spcd_pins(void)
+{
+	// EXP_GPIO_1 (GPIO2_IO6)
+	gpio_request(IMX_GPIO_NR(2, 6), " SBC_VALVE_CONTROL");
+	gpio_direction_output(IMX_GPIO_NR(2, 6), 1);
+
+	// EXP_GPIO_2 (GPIO2_IO7)
+	gpio_request(IMX_GPIO_NR(2,7), " SBC_BLOWER_CONTROL");
+	gpio_direction_output(IMX_GPIO_NR(2,7),1);
+
+	// EXP_GPIO_3 (GPIO2_IO24)
+	gpio_request(IMX_GPIO_NR(2,24), " SBC_PWR_HOLD");
+	gpio_direction_output(IMX_GPIO_NR(2,24),1);
+
+	// EXP_GPIO_5 (GPIO2_IO29)
+	gpio_request(IMX_GPIO_NR(2,29), " WDT_ALERT");
+	gpio_direction_output(IMX_GPIO_NR(2,29),1);
+}
+
 int board_eth_init(bd_t *bis)
 {
 	if (is_mx6dqp()) {
@@ -410,6 +429,8 @@ int board_init(void)
 
 	board_version = get_carrierboard_version();
 	board_id = get_carrierboard_id();
+
+	setup_spcd_pins();
 
 #ifdef CONFIG_CMD_SATA
 	setup_iomux_sata();
