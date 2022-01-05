@@ -26,6 +26,8 @@ add new commands. Also, instead of permanently adding rarely used
 code (for instance hardware test utilities) to the monitor, you can
 load and run it dynamically.
 
+This repository contains changes specific to support development of the AVT SPCD.
+
 
 Status:
 =======
