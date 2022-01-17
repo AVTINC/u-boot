@@ -65,7 +65,6 @@ static iomux_v3_cfg_t const uart4_pads[] = {
 	MX6_PAD_KEY_ROW0__UART4_RX_DATA | MUX_PAD_CTRL(UART_PAD_CTRL),
 };
 
-#ifdef CONFIG_CONSOLE_ENABLE_GPIO
 static iomux_v3_cfg_t const ext_gpios_pads[] = {
 	MX6_PAD_NANDF_D5__GPIO2_IO05 | MUX_PAD_CTRL(GPI_PAD_CTRL),
 	MX6_PAD_NANDF_D6__GPIO2_IO06 | MUX_PAD_CTRL(GPI_PAD_CTRL),
@@ -82,7 +81,6 @@ static void setup_iomux_ext_gpios(void)
 	imx_iomux_v3_setup_multiple_pads(ext_gpios_pads,
 					 ARRAY_SIZE(ext_gpios_pads));
 }
-#endif
 
 static iomux_v3_cfg_t const ksz9031_pads[] = {
 	/* Micrel KSZ9031 PHY reset */
@@ -271,7 +269,9 @@ static void setup_iomux_uart(void)
 
 static void setup_spcd_pins(void)
 {
-	// EXP_GPIO_1 (GPIO2_IO6)
+	setup_iomux_ext_gpios();
+
+  // EXP_GPIO_1 (GPIO2_IO6)
 	gpio_request(IMX_GPIO_NR(2, 6), " SBC_VALVE_CONTROL");
 	gpio_direction_output(IMX_GPIO_NR(2, 6), 0);
 
