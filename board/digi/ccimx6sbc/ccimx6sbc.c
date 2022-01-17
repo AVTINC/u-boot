@@ -271,7 +271,7 @@ static void setup_spcd_pins(void)
 {
 	setup_iomux_ext_gpios();
 
-	// EXP_GPIO_1 (GPIO2_IO6)
+  // EXP_GPIO_1 (GPIO2_IO6)
 	gpio_request(IMX_GPIO_NR(2, 6), " SBC_VALVE_CONTROL");
 	gpio_direction_output(IMX_GPIO_NR(2, 6), 0);
 
