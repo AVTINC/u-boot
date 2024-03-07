@@ -60,6 +60,10 @@ unsigned int board_id = CARRIERBOARD_ID_UNDEFINED;
 	PAD_CTL_PUS_100K_DOWN | PAD_CTL_SPEED_MED |               \
 	PAD_CTL_DSE_40ohm   | PAD_CTL_SRE_FAST)
 
+#define SPCD_OPEN_DRAIN_CTRL (PAD_CTL_PKE | PAD_CTL_PUE |     \
+    PAD_CTL_PUS_22K_UP | PAD_CTL_SPEED_MED |                  \
+    PAD_CTL_DSE_40ohm  | PAD_CTL_SRE_FAST  | PAD_CTL_ODE)
+
 static iomux_v3_cfg_t const uart4_pads[] = {
 	MX6_PAD_KEY_COL0__UART4_TX_DATA | MUX_PAD_CTRL(UART_PAD_CTRL),
 	MX6_PAD_KEY_ROW0__UART4_RX_DATA | MUX_PAD_CTRL(UART_PAD_CTRL),
@@ -72,7 +76,7 @@ static iomux_v3_cfg_t const ext_gpios_pads[] = {
 	MX6_PAD_EIM_CS1__GPIO2_IO24 | MUX_PAD_CTRL(GPI_PAD_CTRL),
 	MX6_PAD_EIM_EB0__GPIO2_IO28 | MUX_PAD_CTRL(GPI_PAD_CTRL),
 	MX6_PAD_EIM_EB1__GPIO2_IO29 | MUX_PAD_CTRL(GPI_PAD_CTRL),
-	MX6_PAD_GPIO_18__GPIO7_IO13 | MUX_PAD_CTRL(GPI_PAD_CTRL),
+	MX6_PAD_GPIO_18__GPIO7_IO13 | MUX_PAD_CTRL(SPCD_OPEN_DRAIN_CTRL),
 	MX6_PAD_GPIO_19__GPIO4_IO05 | MUX_PAD_CTRL(GPI_PAD_CTRL),
 };
 
@@ -267,27 +271,6 @@ static void setup_iomux_uart(void)
 	imx_iomux_v3_setup_multiple_pads(uart4_pads, ARRAY_SIZE(uart4_pads));
 }
 
-static void setup_spcd_pins(void)
-{
-	setup_iomux_ext_gpios();
-
-  // EXP_GPIO_1 (GPIO2_IO6)
-	gpio_request(IMX_GPIO_NR(2, 6), " SBC_VALVE_CONTROL");
-	gpio_direction_output(IMX_GPIO_NR(2, 6), 0);
-
-	// EXP_GPIO_2 (GPIO2_IO7)
-	gpio_request(IMX_GPIO_NR(2,7), " SBC_BLOWER_CONTROL");
-	gpio_direction_output(IMX_GPIO_NR(2,7),0);
-
-	// EXP_GPIO_3 (GPIO2_IO24)
-	gpio_request(IMX_GPIO_NR(2,24), " SBC_PWR_HOLD");
-	gpio_direction_output(IMX_GPIO_NR(2,24),1);
-
-	// EXP_GPIO_5 (GPIO2_IO29)
-	gpio_request(IMX_GPIO_NR(2,29), " WDT_ALERT");
-	gpio_direction_output(IMX_GPIO_NR(2,29),0);
-}
-
 int board_eth_init(bd_t *bis)
 {
 	if (is_mx6dqp()) {
@@ -429,8 +412,6 @@ int board_init(void)
 
 	board_version = get_carrierboard_version();
 	board_id = get_carrierboard_id();
-
-	setup_spcd_pins();
 
 #ifdef CONFIG_CMD_SATA
 	setup_iomux_sata();
