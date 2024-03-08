@@ -68,7 +68,7 @@ unsigned int board_id = CARRIERBOARD_ID_UNDEFINED;
     PAD_CTL_DSE_40ohm  | PAD_CTL_SRE_FAST  | PAD_CTL_ODE)
 
 #define SPCD_INPUT_CTRL (PAD_CTRL_PKE | PAD_CTRL_PUE |        \
-    PAD_CTL_PUS_100K_DOWN | PAD_CTRL_SPEED_MED |              \
+    PAD_CTL_PUS_22K_UP | PAD_CTRL_SPEED_MED |                 \
     PAD_DTL_DSE_40ohm  | PAD_CTL_SRE_FAST)
 
 static iomux_v3_cfg_t const uart4_pads[] = {
