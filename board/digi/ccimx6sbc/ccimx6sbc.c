@@ -67,9 +67,9 @@ unsigned int board_id = CARRIERBOARD_ID_UNDEFINED;
     PAD_CTL_PUS_22K_UP | PAD_CTL_SPEED_MED |                  \
     PAD_CTL_DSE_40ohm  | PAD_CTL_SRE_FAST  | PAD_CTL_ODE)
 
-#define SPCD_INPUT_CTRL (PAD_CTL_PKE | PAD_CTRL_PUE |        \
-    PAD_CTL_PUS_22K_UP | PAD_CTRL_SPEED_MED |                 \
-    PAD_DTL_DSE_40ohm  | PAD_CTL_SRE_FAST)
+#define SPCD_INPUT_CTRL (PAD_CTL_PKE | PAD_CTL_PUE |        \
+    PAD_CTL_PUS_22K_UP | PAD_CTL_SPEED_MED |                 \
+    PAD_CTL_DSE_40ohm  | PAD_CTL_SRE_FAST)
 
 static iomux_v3_cfg_t const uart4_pads[] = {
 	MX6_PAD_KEY_COL0__UART4_TX_DATA | MUX_PAD_CTRL(UART_PAD_CTRL),
